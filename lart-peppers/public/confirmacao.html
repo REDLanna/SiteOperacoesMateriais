@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedido Confirmado — L'Art Peppers</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<style>
+  body { background: #0a0a08; min-height: 100vh; display: flex; flex-direction: column; }
+  .confirm-wrap {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    padding: 4rem 2rem;
+  }
+  .confirm-card {
+    max-width: 560px; width: 100%;
+    border: 1px solid rgba(201,148,58,0.25);
+    background: rgba(255,255,255,0.02);
+    padding: 3.5rem 3rem;
+    text-align: center;
+    animation: fadeUp 0.8s ease forwards;
+  }
+  @keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform:translateY(0); } }
+  .confirm-icon { font-size: 3.5rem; margin-bottom: 1.5rem; }
+  .confirm-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 900;
+    color: #faf6ef; margin-bottom: 0.5rem;
+  }
+  .confirm-title em { color: #c9943a; font-style: italic; }
+  .confirm-sub { color: rgba(245,237,224,0.6); font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.7; }
+  .order-number-box {
+    background: rgba(192,32,15,0.1);
+    border: 1px solid rgba(192,32,15,0.3);
+    padding: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  .order-number-box small { display:block; font-size:0.6rem; letter-spacing:0.4em; text-transform:uppercase; color:#c9943a; margin-bottom:0.4rem; }
+  .order-number-box strong { font-size: 1.4rem; color: #faf6ef; font-family:'Playfair Display',serif; }
+  .confirm-details { text-align:left; border-top:1px solid rgba(201,148,58,0.15); padding-top:1.5rem; margin-bottom:2rem; }
+  .confirm-details p { font-size:0.85rem; color:rgba(245,237,224,0.7); line-height:2; }
+  .confirm-details strong { color:#faf6ef; }
+  .pix-box {
+    background: rgba(201,148,58,0.07);
+    border: 1px solid rgba(201,148,58,0.3);
+    padding: 1.5rem; margin-bottom: 2rem; text-align:left;
+  }
+  .pix-box h4 { color:#e8b96a; margin-bottom:0.5rem; font-size:0.9rem; }
+  .pix-box p { font-size:0.82rem; color:rgba(245,237,224,0.7); line-height:1.7; }
+  .pix-key-display { font-size:1rem; color:#faf6ef; margin-top:0.5rem; font-weight:600; }
+  .btn-back { display:inline-block; margin-top:0; text-decoration:none; }
+</style>
+</head>
+<body>
+<nav class="nav nav-simple">
+  <a href="/" class="nav-brand">L'Art <span>Peppers</span></a>
+</nav>
+
+<div class="confirm-wrap">
+  <div class="confirm-card">
+    <div class="confirm-icon" id="confirmIcon">✅</div>
+    <h1 class="confirm-title" id="confirmTitle">Pedido <em>confirmado!</em></h1>
+    <p class="confirm-sub" id="confirmSub">Obrigado pela sua compra. Você receberá um e-mail com os detalhes do pedido em breve.</p>
+
+    <div class="order-number-box">
+      <small>Número do pedido</small>
+      <strong id="orderNumberDisplay">—</strong>
+    </div>
+
+    <div id="pixInstructions" style="display:none">
+      <div class="pix-box">
+        <h4>⚡ Instruções para pagamento PIX</h4>
+        <p>Realize a transferência para a chave abaixo. O pedido será confirmado automaticamente após identificarmos o pagamento (até 30 minutos).</p>
+        <div class="pix-key-display">📧 lartpeppers@email.com</div>
+        <p style="margin-top:0.5rem">Valor: <strong id="pixAmount" style="color:#e8b96a"></strong></p>
+      </div>
+    </div>
+
+    <div class="confirm-details" id="confirmDetails"></div>
+
+    <a href="/" class="btn-primary btn-back">← Voltar à loja</a>
+  </div>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const orderNumber = params.get('order');
+  const payMethod   = params.get('pay');
+  const total       = params.get('total');
+
+  if (orderNumber) {
+    document.getElementById('orderNumberDisplay').textContent = orderNumber;
+  }
+
+  if (payMethod === 'pix') {
+    document.getElementById('confirmIcon').textContent = '⚡';
+    document.getElementById('confirmTitle').innerHTML = 'Aguardando <em>pagamento</em>';
+    document.getElementById('confirmSub').textContent = 'Seu pedido foi registrado! Realize o pagamento via PIX para confirmarmos o envio.';
+    document.getElementById('pixInstructions').style.display = 'block';
+    document.getElementById('pixAmount').textContent = `R$ ${parseFloat(total || 0).toFixed(2).replace('.', ',')}`;
+  }
+
+  const details = document.getElementById('confirmDetails');
+  details.innerHTML = `
+    <p>📦 <strong>Prazo de envio:</strong> até 3 dias úteis após confirmação do pagamento</p>
+    <p>📧 <strong>Confirmação:</strong> enviada para o e-mail cadastrado</p>
+    <p>📞 <strong>Dúvidas?</strong> Entre em contato pelo Instagram <strong>@lartpeppers</strong></p>
+  `;
+
+  // Limpa carrinho após confirmação
+  localStorage.removeItem('lart_cart');
+</script>
+</body>
+</html>

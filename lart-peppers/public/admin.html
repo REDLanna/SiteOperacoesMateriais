@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — L'Art Peppers</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+
+<!-- LOGIN -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <div class="login-logo">L'Art <em>Peppers</em></div>
+    <p class="login-sub">Painel Administrativo</p>
+    <div class="field">
+      <label>Usuário</label>
+      <input type="text" id="adminUser" value="admin" placeholder="admin">
+    </div>
+    <div class="field">
+      <label>Senha</label>
+      <input type="password" id="adminPass" value="admin123" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="field-error" id="loginError" style="margin-top:-0.5rem"></div>
+    <button class="btn-primary full" onclick="doLogin()">Entrar</button>
+  </div>
+</div>
+
+<!-- ADMIN LAYOUT -->
+<div class="admin-layout" id="adminLayout" style="display:none">
+
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand">L'Art <em>Peppers</em></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-link active" onclick="showTab('dashboard',this)">📊 Dashboard</a>
+      <a class="sidebar-link" onclick="showTab('orders',this)">📦 Pedidos</a>
+      <a class="sidebar-link" onclick="showTab('customers',this)">👥 Clientes</a>
+      <a class="sidebar-link" onclick="showTab('products',this)">🌶️ Produtos</a>
+    </nav>
+    <button class="sidebar-logout" onclick="doLogout()">Sair →</button>
+  </aside>
+
+  <main class="admin-main">
+
+    <!-- DASHBOARD -->
+    <div class="admin-tab active" id="tab-dashboard">
+      <h2 class="admin-title">Dashboard</h2>
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card"><div class="stat-val" id="statOrders">—</div><div class="stat-lbl">Pedidos Total</div></div>
+        <div class="stat-card highlight"><div class="stat-val" id="statRevenue">—</div><div class="stat-lbl">Receita Total</div></div>
+        <div class="stat-card"><div class="stat-val" id="statCustomers">—</div><div class="stat-lbl">Clientes</div></div>
+        <div class="stat-card warn"><div class="stat-val" id="statPending">—</div><div class="stat-lbl">Pedidos Pendentes</div></div>
+      </div>
+      <h3 class="admin-subtitle">Últimos Pedidos</h3>
+      <div class="admin-table-wrap"><table class="admin-table" id="recentOrdersTable">
+        <thead><tr><th>Nº Pedido</th><th>Cliente</th><th>Total</th><th>Pagamento</th><th>Status</th><th>Data</th></tr></thead>
+        <tbody id="recentOrdersBody"></tbody>
+      </table></div>
+    </div>
+
+    <!-- ORDERS -->
+    <div class="admin-tab" id="tab-orders">
+      <h2 class="admin-title">Pedidos</h2>
+      <div class="admin-table-wrap"><table class="admin-table">
+        <thead><tr><th>Nº</th><th>Cliente</th><th>Cidade</th><th>Total</th><th>Pagamento</th><th>Status</th><th>Data</th><th>Ações</th></tr></thead>
+        <tbody id="ordersBody"></tbody>
+      </table></div>
+    </div>
+
+    <!-- CUSTOMERS -->
+    <div class="admin-tab" id="tab-customers">
+      <h2 class="admin-title">Clientes</h2>
+      <div class="admin-table-wrap"><table class="admin-table">
+        <thead><tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Pedidos</th><th>Total Gasto</th><th>Cadastro</th></tr></thead>
+        <tbody id="customersBody"></tbody>
+      </table></div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="admin-tab" id="tab-products">
+      <h2 class="admin-title">Produtos</h2>
+      <div class="products-admin-grid" id="productsAdminGrid"></div>
+    </div>
+
+  </main>
+</div>
+
+<script src="/js/admin.js"></script>
+</body>
+</html>

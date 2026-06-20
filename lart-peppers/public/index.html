@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'Art Peppers — Molhos Artesanais Extremos</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="/" class="nav-brand">L'Art <span>Peppers</span></a>
+  <div class="nav-right">
+    <span class="nav-tagline">Viçosa, MG</span>
+    <button class="cart-btn" id="cartBtn" onclick="toggleCart()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Artesanal · Viçosa MG · Desde 2026</p>
+    <h1 class="hero-title">A arte<br>do <em>extremo</em></h1>
+    <p class="hero-desc">Molhos concentrados de Carolina Reaper, feitos à mão com ingredientes selecionados. Puro. Sem conservantes. Sem desculpas.</p>
+    <div class="hero-shu">
+      <span class="shu-number">2.200.000</span>
+      <span class="shu-label">Unidades Scoville</span>
+    </div>
+    <button class="btn-primary" onclick="scrollToProducts()">Ver os molhos</button>
+  </div>
+  <div class="hero-scroll">
+    <span>scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- AVISO -->
+<div class="warning-bar">
+  <span>⚠️</span>
+  <p>Produto para adultos. Use com cautela. Mantenha longe de crianças, olhos e mucosas.</p>
+</div>
+
+<!-- PRODUTOS -->
+<section class="products-section" id="products">
+  <div class="section-header">
+    <p class="section-label">Nossos Produtos</p>
+    <h2 class="section-title">Escolha o seu <em>nível</em></h2>
+  </div>
+  <div class="products-grid" id="productsGrid">
+    <!-- Preenchido via JS -->
+    <div class="product-skeleton"></div>
+    <div class="product-skeleton"></div>
+    <div class="product-skeleton"></div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="about-section">
+  <div class="about-inner">
+    <div class="about-text">
+      <p class="section-label">Sobre a L'Art Peppers</p>
+      <h2 class="section-title">Feito com <em>obsessão</em></h2>
+      <p>Cada frasco é produzido em pequenos lotes, à mão, sem pressa e sem atalhos. Usamos apenas pimentas Carolina Reaper de qualidade premium, azeite extravirgem, vinagre branco, sal e açúcar.</p>
+      <p style="margin-top:1rem">Sem corantes. Sem aromas artificiais. Sem conservantes. Apenas o sabor e o calor puro da pimenta mais famosa do mundo.</p>
+      <div class="about-stats">
+        <div class="stat"><span class="stat-num">100%</span><span class="stat-lbl">Artesanal</span></div>
+        <div class="stat"><span class="stat-num">0</span><span class="stat-lbl">Conservantes</span></div>
+        <div class="stat"><span class="stat-num">2.2M</span><span class="stat-lbl">Scoville</span></div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <div class="about-card">
+        <div class="card-icon">🌶️</div>
+        <h3>Carolina Reaper</h3>
+        <p>A pimenta mais quente do mundo segundo o Guinness World Records desde 2013.</p>
+      </div>
+      <div class="about-card">
+        <div class="card-icon">⚗️</div>
+        <h3>Processo Artesanal</h3>
+        <p>Maceração em azeite + acidificação com vinagre. Sem cozimento para preservar a capsaicina.</p>
+      </div>
+      <div class="about-card">
+        <div class="card-icon">📦</div>
+        <h3>Envio Nacional</h3>
+        <p>Embalagem reforçada com proteção térmica. Enviamos para todo o Brasil pelos Correios.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>Seu Carrinho</h3>
+    <button onclick="toggleCart()" class="cart-close">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <span>🛒</span>
+      <p>Seu carrinho está vazio</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total-row">
+      <span>Subtotal</span>
+      <strong id="cartTotalDisplay">R$ 0,00</strong>
+    </div>
+    <p class="cart-shipping-note">🚚 Frete calculado no checkout</p>
+    <button class="btn-primary full" onclick="goToCheckout()">Finalizar Pedido</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>L'Art <em>Peppers</em></h3>
+      <p>Artesanal · Extremo · Refinado</p>
+    </div>
+    <div class="footer-info">
+      <p>📍 Viçosa, MG</p>
+      <p>📦 Envios para todo o Brasil</p>
+      <p>📩 lartpeppers@email.com</p>
+    </div>
+    <div class="footer-warn">
+      <p>⚠️ Produto para adultos maiores de 18 anos. Consuma com responsabilidade.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 L'Art Peppers — Todos os direitos reservados</p>
+  </div>
+</footer>
+
+<script src="/js/cart.js"></script>
+<script src="/js/store.js"></script>
+</body>
+</html>
